@@ -1,0 +1,39 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  # Zalando enforces a naming convention: the cluster name must start with
+  # "<teamId>-" - this is a real gotcha if you skip it, the operator will
+  # reject the manifest.
+  name: acid-day2-cluster
+spec:
+  teamId: "acid"
+  numberOfInstances: 3  # same 1 primary + 2 replicas topology as your CNPG cluster
+
+  volume:
+    size: 5Gi  # matches CNPG's per-instance disk size for a fair comparison
+
+  postgresql:
+    version: "16"  # a well-established, stable Spilo-supported version
+
+  users:
+    zalando:
+      - superuser
+      - createdb
+    appuser: []
+
+  databases:
+    appdb: appuser
+
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+
+  # Zalando's operator bundles PgBouncer connection pooling built-in - CNPG
+  # requires a separate deployment for this. Not enabling it today, but worth
+  # noting for your comparison doc: this is a real architectural difference,
+  # not just a config option.
+  enableConnectionPooler: false
