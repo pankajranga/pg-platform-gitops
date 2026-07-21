@@ -1,0 +1,48 @@
+name: Terraform Plan
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'terraform/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'terraform/**'
+
+# Required for GitHub's OIDC token to be issued to this workflow
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/888350756327/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'github-actions-terraform@projectdemo-501114.iam.gserviceaccount.com'
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.15.8' # matches the version installed locally
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: |
+          terraform plan \
+            -var="project_id=projectdemo-501114" \
+            -var="backup_bucket_name=panka-pg-backups-2026" \
+            -no-color
