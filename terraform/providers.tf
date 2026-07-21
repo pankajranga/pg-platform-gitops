@@ -8,9 +8,10 @@ terraform {
     }
   }
 
-  # Using local state for Day 1 to keep things simple and fast.
-  # Optional stretch goal later in the week: migrate this to a GCS backend
-  # once the bucket below exists (classic chicken-and-egg problem otherwise).
+  backend "gcs" {
+    bucket = "panka-tf-state-2026"
+    prefix = "pg-platform"
+  }
 }
 
 provider "google" {
