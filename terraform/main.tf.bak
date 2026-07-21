@@ -64,16 +64,15 @@ resource "google_container_node_pool" "primary_nodes" {
     labels = {
       env = "pg-platform-sprint"
     }
-	workload_metadata_config {
-      mode = "GKE_METADATA"
-    }
   }
 
   autoscaling {
     min_node_count = 1
     max_node_count = 4
   }
-
+  workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
 }
 
 ### --- GCS bucket for Postgres backups ---
