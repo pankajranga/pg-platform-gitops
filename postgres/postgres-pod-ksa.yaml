@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres-pod-custom
+  namespace: default
+  annotations:
+    iam.gke.io/gcp-service-account: zalando-wal-backup@projectdemo-501114.iam.gserviceaccount.com
