@@ -1,0 +1,29 @@
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaConnect
+metadata:
+  name: pg-connect-cluster
+  namespace: kafka
+  annotations:
+    # Required so Strimzi will watch for KafkaConnector resources targeting this Connect cluster
+    strimzi.io/use-connector-resources: "true"
+spec:
+  # Using Debezium's official pre-built image (bundles the Postgres connector already)
+  # instead of Strimzi's build feature, to avoid needing a container registry.
+  image: quay.io/debezium/connect:3.0
+  replicas: 1
+  bootstrapServers: pg-platform-kafka-kafka-bootstrap:9092
+  groupId: pg-connect-cluster
+  offsetStorageTopic: connect-offsets
+  configStorageTopic: connect-configs
+  statusStorageTopic: connect-status
+  config:
+    config.storage.replication.factor: 1
+    offset.storage.replication.factor: 1
+    status.storage.replication.factor: 1
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1536Mi"

@@ -1,0 +1,16 @@
+{
+  "name": "zalando-postgres-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname": "acid-day2-cluster.default.svc.cluster.local",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "yZjqSNC4Fse6hYDmnBLkOnhNYBW2yHwlNckDLpJfhQSAEYz5WGnQ5fcp0uBBA5sw",
+    "database.dbname": "appdb",
+    "topic.prefix": "pgserver",
+    "plugin.name": "pgoutput",
+    "slot.name": "debezium_slot",
+    "table.include.list": "public.zalando_test",
+    "tombstones.on.delete": "false"
+  }
+}

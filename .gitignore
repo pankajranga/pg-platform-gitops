@@ -2,3 +2,6 @@ terraform/.terraform/
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
+*-key.json
+bq-sink-key.json
+ar-key.json

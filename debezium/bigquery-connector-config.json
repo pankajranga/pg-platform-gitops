@@ -1,0 +1,19 @@
+{
+  "name": "bigquery-sink-connector",
+  "config": {
+    "connector.class": "com.wepay.kafka.connect.bigquery.BigQuerySinkConnector",
+    "tasks.max": "1",
+    "topics": "pgserver.public.zalando_test",
+    "project": "projectdemo-501114",
+    "defaultDataset": "cdc_sink",
+    "keySource": "FILE",
+    "keyfile": "/tmp/bq-sink-key.json",
+    "autoCreateTables": "false",
+    "sanitizeTopics": "true",
+    "topic2TableMap": "pgserver.public.zalando_test:zalando_test",
+    "bigQueryPartitionDecorator": "false",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "true"
+  }
+}
