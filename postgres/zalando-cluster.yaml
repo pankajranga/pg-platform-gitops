@@ -18,7 +18,7 @@ spec:
       wal_level: "logical"  # required for Debezium/CDC - logical decoding of WAL changes
       max_replication_slots: "10"  # default is already 10; explicit here since Debezium needs its own slot alongside physical replica slots
       max_wal_senders: "10"  # default is already 10; same reasoning
-      shared_preload_libraries: "pg_stat_statements"
+      shared_preload_libraries: "pg_stat_statements,pgaudit"
       pgaudit.log: "write, ddl"
 
   users:
