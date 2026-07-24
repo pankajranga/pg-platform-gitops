@@ -21,7 +21,7 @@ spec:
               name: metrics
           env:
             - name: DATA_SOURCE_URI
-              value: "acid-day2-cluster.default.svc.cluster.local:5432/appdb?sslmode=disable"
+              value: "acid-day2-cluster.default.svc.cluster.local:5432/appdb?sslmode=require"
             - name: DATA_SOURCE_USER
               valueFrom:
                 secretKeyRef:
