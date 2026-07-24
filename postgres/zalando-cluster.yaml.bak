@@ -14,6 +14,10 @@ spec:
 
   postgresql:
     version: "16"  # a well-established, stable Spilo-supported version
+    parameters:
+      wal_level: "logical"  # required for Debezium/CDC - logical decoding of WAL changes
+      max_replication_slots: "10"  # default is already 10; explicit here since Debezium needs its own slot alongside physical replica slots
+      max_wal_senders: "10"  # default is already 10; same reasoning
 
   users:
     zalando:
